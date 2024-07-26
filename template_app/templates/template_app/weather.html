@@ -1,0 +1,49 @@
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Weather</title>
+</head>
+<body>
+
+    <h1>Weather Report</h1>
+    <!-- jinja syntax-->
+     <h2>Istanbul: {{istanbul}}</h2>
+     <br>
+     <h2>Amsterdam: {{amsterdam}}</h2>
+     <br>
+    <br>
+        <ul>
+     {% for key,value in rome.items  %}
+     <h2><li> Rome: {{key}} : {{value}} </li></h2>
+     
+     {% endfor %}
+        </ul>
+        {% if user_premium %}
+        <ul>
+            {% for item in paris %}
+            {% if item > 20  %}
+
+            <h2><li>PARIS: TOO HOT!!!</li></h2>
+            {% else %}
+
+            <h2><li> Paris: {{item}}</li></h2>
+            
+            {% endif %}
+            {% endfor %}
+            </ul>
+        
+        {% endif %}
+
+        <br>
+
+        <h2>{{test | upper}}</h2>
+
+        <br>
+
+        <h2><a href="{% url 'template_app:index' %}">Go to index</a></h2>
+
+
+    
+</body>
+</html>
