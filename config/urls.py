@@ -15,8 +15,16 @@ Including another URLconf
     2. Add a URL to urlpatterns:  path('blog/', include('blog.urls'))
 """
 from django.contrib import admin
-from django.urls import path
+from django.urls import path, include
+from blog.views import iletisim
+from django.conf.urls.static import static
+from django.conf import settings
+
+
+
 
 urlpatterns = [
     path("admin/", admin.site.urls),
-]
+    path('blog/', include('blog.urls')), # biri benim iletisim kaynağıma gelirse iletisim fonksyionumla cevap ver diyoruz
+    #blog u kaldırırsak ana sayfaya direkt gitmiş olur yani iletisim e 
+] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
