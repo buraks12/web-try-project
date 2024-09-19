@@ -1,12 +1,27 @@
 <div class="col-sm-3">
-    <div class="card" style="width: 18rem;">
+  {{request.user}}
+    <div class="card mb-3" style="width: 18rem;">
         <ul class="list-group list-group-flush">
-          <li class="list-group-item">An item</li>
-          <li class="list-group-item">A second item</li>
-          <li class="list-group-item">A third item</li>
+          <li class="list-group-item">Profil Düzenle</li>
+          <li class="list-group-item">Şifre Değiştir</li>
+          <li class="list-group-item">Yazı Ekle</li>
+          <li class="list-group-item"><a href="{% url 'yazilarim' %}">Yazılarım</a></li>
+          <li class="list-group-item">Çıkış Yap</li>
         </ul>
-        <div class="card-footer">
-          Card footer
+        <div class="card-header">
+          Menü
         </div>
+        {% if request.user.is_authenticated %} 
+
+
+
+
+
+        {% else %}
+
+        Login Formu Gelecek
+
+
+        {% endif %}
       </div>
 </div>
