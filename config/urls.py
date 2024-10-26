@@ -25,6 +25,7 @@ from django.conf import settings
 
 urlpatterns = [
     path("admin/", admin.site.urls),
+    path('account/', include('account.urls')),
     path('blog/', include('blog.urls')), # biri benim iletisim kaynağıma gelirse iletisim fonksyionumla cevap ver diyoruz
     #blog u kaldırırsak ana sayfaya direkt gitmiş olur yani iletisim e 
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

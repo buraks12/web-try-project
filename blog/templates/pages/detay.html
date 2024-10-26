@@ -1,6 +1,8 @@
 {% extends 'base.html' %}
+{% load static %}
 
 {% block title %} {{yazi.baslik}} {% endblock %}
+{% load crispy_forms_tags %}
 
 {% block content %} 
 
@@ -18,15 +20,85 @@
           {% else %}
             Henüz içerik yok.
           {% endif %}</p>
-        <p class="card-text"><small class="text-body-secondary">{{ yazi.duzenleme_tarihi|timesince }} önce paylaşıldı</small></p>
+        <p class="card-text"><small class="text-body-secondary">{{ yazi.duzenleme_tarihi|timesince }} önce paylaşıldı
+          <br>
+          Yazar: <a href="{% url 'profil' username=yazi.yazar.username %}">{{yazi.yazar.username}}</a>
+          {% if request.user == yazi.yazar %}
+          <p>
+          <a class="btn  btn-primary" href="{% url 'yazi-guncelle' slug=yazi.slug %}">Düzenle</a>
+          </p>
+
+          <p>
+            <a class="btn  btn-danger" href="{% url 'yazi-sil' slug=yazi.slug %}">Sil</a>
+          </p>
+
+          
+
+          {% endif %}
+        </small></p>
       </div>
     </div>
   </div>
 </div>
 
-<p>{{yazi}}</p>
+
 
 <h5>Yorumlar</h5>
+
+{% if request.user.is_authenticated %}
+    <form method="POST">
+    {% csrf_token %}
+
+    {{ yorum_ekle_form|crispy }}
+<input type="submit" value="Yorum Yap" class="btn btn-danger"/>
+
+</form>
+
+{% else %}
+
+<p>Yorum yapmak için üye ol laaaaa</p>
+
+
+{% endif %}
+
+
+{% if messages %}
+<ul class="messages">
+    {% for message in messages %}
+    <li{% if message.tags %} class="{{ message.tags }}"{% endif %}>
+        {% if message.level == DEFAULT_MESSAGE_LEVELS.ERROR %}Important: {% endif %}
+        {{ message }}
+    </li>
+    {% endfor %}
+</ul>
+{% endif %}
+
+
+{% for yorum in yorumlar %}
+
+<div class="card">
+  <div class="card-body" style="display:flex;flex-direction: row;">
+    <div>
+      {% if yorum.yazan.avatar %}
+     
+      <img src="{{ yorum.yazan.avatar.url }}" class="rounded" class="pt-4" width="75x" height="75x">
+      {% else%}
+      <img src="{% static 'img/5f3804fcadcdeb1918791694.jpg.webp'%}" class="rounded" class="pt-4" width="75x" height="75x">
+      {%endif%}
+    </div>
+    <h5 class="card-title">{{ yorum.yazan.username }}</h5>
+    <p class="card-text"> {{ yorum.yorum }} </p>
+    {% if request.user == yorum.yazan or request.user == yazi.yazar %}
+    <p> <a class="btn btn-danger" href="{% url 'yorum-sil' id=yorum.id %}">Yorum Sil</a></p>
+    {% endif %}
+    <p class="card-text">Last updated 3 mins ago</p>
+  </div>
+</div>
+
+{% empty %}
+<p>Bu yazı için hiç yorum yapılmamıştır</p>
+
+{% endfor %}
 
 
 {% endblock %}

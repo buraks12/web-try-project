@@ -1,0 +1,18 @@
+{% extends 'base.html' %}
+{% load crispy_forms_tags %}
+
+{% block title %}  YAZİ EKLE    {% endblock %}
+
+
+
+
+{% block content %} 
+
+<form action="{% url 'yazi-ekle' %}" enctype="multipart/form-data" method="POST">
+    {% csrf_token %}
+    {{ for.media }}
+    {{ form|crispy }}  <!-- Form elemanlarını paragraflar halinde render eder -->
+    <input type="submit" class="btn btn-danger mt-3" value="Yazi Oluştur"></button>
+  </form>
+
+{% endblock %}

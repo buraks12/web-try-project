@@ -1,0 +1,17 @@
+{% extends 'base.html' %}
+{% load crispy_forms_tags %}
+
+{% block title %}  YAZİ GUNCELLE   {% endblock %}
+
+
+
+
+{% block content %} 
+
+<form  enctype="multipart/form-data" method="POST">
+    {% csrf_token %}
+    {{ form|crispy }}  <!-- Form elemanlarını paragraflar halinde render eder -->
+    <input type="submit" class="btn btn-danger mt-3" value="Şifre Güncelle"></button>
+  </form>
+
+{% endblock %}

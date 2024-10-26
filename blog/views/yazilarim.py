@@ -14,7 +14,7 @@ def yazilarim(request):
     yazilar = request.user.yazilar.order_by('-id') #bu kategoriye bağlı bütün yazıları çekebiliyoruz
     print(yazilar)
     sayfa = request.GET.get('sayfa')
-    paginator = Paginator(yazilar, 2) #bir sayfada min kaç adet yazı gözükmesini istediğini 2.parametrede belirtiyorsun
+    paginator = Paginator(yazilar, 5) #bir sayfada min kaç adet yazı gözükmesini istediğini 2.parametrede belirtiyorsun
 
     return render(request, 'pages/yazilarim.html', context={
         'yazilar' : paginator.get_page(sayfa),
